@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Easy Calculate</title>
+		<style>
+			* {
+			    margin: 0;
+			    padding: 0;
+			    font-family: Arial, Helvetica, sans-serif;
+			    box-sizing: border-box;
+			}
+
+			body {
+			    display: flex;
+			    justify-content: center;
+			    align-items: center;
+			    height: 100vh;
+			    background-color: #333;
+			}
+
+			.container {
+			    background-color: #222;
+			    border-radius: 10px;
+			    padding: 20px;
+			    max-width: 400px;
+			    width: 90%;
+			}
+
+			.input {
+			    display: flex;
+			    justify-content: center;
+			    align-items: center;
+			    margin-bottom: 10px;
+			}
+
+			p {
+			    padding: 10px;
+			    border: 1px solid black;
+			    border-radius: 10px;
+			    cursor: pointer;
+			    margin-left: 4px;
+			    transition: transform 0.2s ease;
+			}
+
+			p:hover {
+			    transform: scale(1.1);
+			}
+
+			button {
+			    width: 60px;
+			    height: 50px;
+			    font-size: 30px;
+			    margin-top: 5px;
+			    cursor: pointer;
+			    border: 1px solid black;
+			    border-radius: 10px;
+			    background-color: #444;
+			    color: white;
+			    transition: background-color 0.3s ease, transform 0.2s ease;
+			}
+
+			button:hover {
+			    background-color: #555;
+			    transform: scale(1.1);
+			}
+
+			input {
+			    padding: 10px;
+			    width: calc(100% - 70px);
+			    border: none;
+			    background-color: #444;
+			    color: white;
+			    font-size: 24px;
+			    border-radius: 10px;
+			    margin-right: 10px;
+			    transition: transform 0.2s ease;
+			}
+
+			input:focus {
+			    transform: scale(1.05);
+			}
+		</style>
+	</head>
+	<body>
+		<center>
+			<div class="container">
+				<h1 style="text-align: center; margin-bottom: 20px; color: white;">
+					Welcome to EasyCalculate
+				</h1>
+				<div class="input">
+					<input type="search" placeholder="0" autocomplete="off" />
+					<p>Clear</p>
+				</div>
+				<div class="keyboard">
+					<div class="row">
+						<button>1</button>
+						<button>2</button>
+						<button>3</button>
+						<button>/</button>
+					</div>
+
+					<div class="row">
+						<button>4</button>
+						<button>5</button>
+						<button>6</button>
+						<button>-</button>
+					</div>
+
+					<div class="row">
+						<button>7</button>
+						<button>8</button>
+						<button>9</button>
+						<button>+</button>
+					</div>
+
+					<div class="row">
+						<button>.</button>
+						<button>0</button>
+						<button>*</button>
+						<button>=</button>
+					</div>
+				</div>
+			</div>
+		</center>
+
+		<script>
+			// starting process on DOMContentLoaded
+			document.addEventListener("DOMContentLoaded", () => {
+			    let clear = false;
+			    let buttons = document.querySelectorAll("button");
+			    let input = document.querySelector("input");
+			    let clear_button = document.querySelector("p");
+			    clear_button.onclick = () => {
+			        input.value = "";
+			        input.style.transform = "scale(1)";
+			    };
+			    buttons.forEach(button => {
+			        button.onclick = function() {
+			            input.style.color = "white";
+			            input.style.transform = "scale(1.05)";
+			            if (button.innerHTML === "=") {
+
+			                let old = input.value;
+			                try {
+			                    let calculate = eval(input.value);
+			                    input.value += `=${calculate}`;
+			                } catch(error) {
+			                    input.style.color = "red";
+			                    input.value = `${error.name}!`;
+			                }
+			                clear = true;
+			            }
+			            else {
+			                if (clear === true) {
+			                    input.value = "";
+			                    clear = false;
+			                }
+			                input.value += button.innerHTML;
+			            }
+			        }
+			    });
+			});
+		</script>
+	</body>
+</html>
